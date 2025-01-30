@@ -13,7 +13,7 @@ header {
     top: 10px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(255, 119, 0, 0.3);
+    background: rgba(255, 119, 0, 1);
     width: 1060px;
     height: 60px;
     display: flex;
