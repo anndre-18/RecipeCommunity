@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { FaLock, FaUser } from "react-icons/fa";
+
 import "./login-register.css";
 import axios from "axios";
 
@@ -16,7 +17,8 @@ const Login = ({ onClose }) => {
     let endpoint = isRegister ? "api/register" : "api/login";
 
     try {
-      const res = await axios.post(`http://localhost:3000/${endpoint}`, {
+      //  const res = await axios.post(`http://localhost:3000/${endpoint}`, {
+        const res = await axios.post(`https://recipeblog-bend.onrender.com/${endpoint}`, {
         uname,
         password,
       });
@@ -33,7 +35,7 @@ const Login = ({ onClose }) => {
         alert(res.data.message || "Invalid credentials!");
       }
     } catch (error) {
-      setError(error.response?.data?.error || "Something went wrong!");
+      setError(error.response?.data?.error || "Something went wrong!!!");
     }
   };
 

@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import { Link } from "react-router"; 
-import Login from "./login";
+import Login from "./Login";
 import './header-home.css'
+
 
 
 
@@ -37,7 +38,7 @@ const Header = ()=>{
                     {/* <Link to="/login" onClick={checkLogin}>Login</Link> */}
                     
                     <p className="link" onClick={checkLogin}>{(isLogin)? "Login" : "Logout"}</p>
-                    <Link className="profile" to="/profile"><CgProfile /></Link>
+                    {/* <Link className="profile" to="/profile"><CgProfile /></Link> */}
 
                     
 

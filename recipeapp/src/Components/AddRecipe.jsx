@@ -34,13 +34,14 @@ const AddRecipe = () => {
 
     try {
       // Make the API request to add the recipe
-      const response = await axios.post('http://localhost:3000/api/recipes', formData, {
+      //const response = await axios.post('http://localhost:3000/api/recipes', formData, {
+      const response = await axios.post('https://recipeblog-bend.onrender.com/api/recipes', formData, {  
         headers: {
           'Content-Type': 'application/json',
         },
       });
 
-      // Log the success message and the details of the newly added recipe to the console
+      // Log the success message and  the details of the newly added recipe to the console
       console.log('Recipe added successfully:', response.data);
 
       setSuccessMessage('Recipe added successfully!');
