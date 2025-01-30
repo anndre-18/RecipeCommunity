@@ -3,6 +3,8 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import './header-home.css';
 
 const Mealitem = ({ data }) => {
+  
+
   return (
     <section className='recipe-grid'>
     <div className="recipe-card">

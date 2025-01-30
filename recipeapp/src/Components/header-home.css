@@ -22,6 +22,7 @@ header {
     border: 1px solid white;
     border-radius: 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
 }
 
 .logo {
@@ -49,7 +50,7 @@ nav .link {
 
 /* ========== HOME PAGE CONTENT ========== */
 .home-content {
-    border: 3px solid #724b4b;
+    /* border: 3px solid #724b4b; */
     text-align: center;
     position: relative;
     top: 100px;
@@ -65,6 +66,7 @@ nav .link {
     background: rgb(255, 115, 0);
     border-radius: 15px;
     outline: none;
+    margin-bottom: 100px;
 }
 
 /* ========== RECIPE GRID (Meal items) ========== */
@@ -133,6 +135,10 @@ nav .link {
     margin-top: 10px;
     font-size: 18px;
 }
+.name-card button:active {
+    background-color: red;
+  }
+  
 
 /* ========== ADD RECIPE FORM ========== */
 .recipe-content {

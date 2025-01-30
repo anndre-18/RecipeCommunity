@@ -1,91 +1,118 @@
-import axios from 'axios';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router';
+import axios from 'axios';
+
 
 const AddRecipe = () => {
-    const [recipedata, setRecipedata] = useState({
+  const [formData, setFormData] = useState({
+    title: '',
+    ingredients: '',
+    instruction: '',
+    time: '',
+  });
+
+  const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    const { title, ingredients, instruction, time } = formData;
+
+    // Check if all fields are filled
+    if (!title || !ingredients || !instruction || !time) {
+      setError('Please fill in all fields.');
+      return;
+    }
+
+    try {
+      // Make the API request to add the recipe
+      const response = await axios.post('http://localhost:3000/api/recipes', formData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      // Log the success message and the details of the newly added recipe to the console
+      console.log('Recipe added successfully:', response.data);
+
+      setSuccessMessage('Recipe added successfully!');
+      setFormData({
         title: '',
         ingredients: '',
         instruction: '',
-        image: null,
-        time: '', // Add time field
-    });
-    const navigate = useNavigate();
+        time: '',
+      });
+      setError('');
+    } catch (err) {
+      setError('There was an error adding the recipe.');
+      console.error(err);
+    }
+  };
 
-    const handleOnChange = (e) => {
-        const { name, value, files } = e.target;
+  return (
+    <div className="recipe-content">
+      <h1>Add a New Recipe</h1>
 
-        setRecipedata((prev) => ({
-            ...prev,
-            [name]: name === "image" ? files[0] : value,
-        }));
-    };
+      {/* Display error and success messages */}
+      {error && <div className="error">{error}</div>}
+      {successMessage && <div className="success">{successMessage}</div>}
 
-    const handleOnSubmit = async (e) => {
-        e.preventDefault();
-        const formData = new FormData();
-
-        formData.append("title", recipedata.title);
-        formData.append("ingredients", JSON.stringify(recipedata.ingredients.split(','))); // Store as an array
-        formData.append("instruction", recipedata.instruction);
-        formData.append("time", recipedata.time); // Add time to the formData
-        if (recipedata.image) {
-            formData.append("image", recipedata.image);
-        }
-
-        try {
-            const token = localStorage.getItem("token"); // Ensure user is authenticated
-            const response = await axios.post('http://localhost:3000/api/recipes', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'Authorization': `Bearer ${token}`, // Include token if required
-                },
-            });
-
-            console.log("Recipe uploaded successfully:", response.data);
-            alert("Recipe added successfully!");
-
-            navigate("/"); // Redirect after success
-        } catch (error) {
-            console.error("Error uploading recipe:", error.response?.data || error);
-            alert("Failed to upload recipe. Please try again.");
-        }
-    };
-
-    return (
-        <div className="recipe-content">
-            <form className="form" onSubmit={handleOnSubmit}>
-                <div className="form-input">
-                    <label htmlFor="title">Title</label>
-                    <input type="text" name="title" required placeholder="Enter recipe title" onChange={handleOnChange} />
-                </div>
-
-                <div className="form-input">
-                    <label htmlFor="ingredients">Ingredients</label>
-                    <textarea name="ingredients" required placeholder="List ingredients, separated by commas" onChange={handleOnChange}></textarea>
-                </div>
-
-                <div className="form-input">
-                    <label htmlFor="instruction">Instructions</label>
-                    <textarea name="instruction" required placeholder="Describe preparation steps" onChange={handleOnChange}></textarea>
-                </div>
-
-                <div className="form-input">
-                    <label htmlFor="time">Time (in minutes)</label>
-                    <input type="number" name="time" required placeholder="Enter preparation time" onChange={handleOnChange} />
-                </div>
-
-                <div className="form-input">
-                    <label htmlFor="image">Recipe Image</label>
-                    <input type="file" name="image" required onChange={handleOnChange} />
-                </div>
-
-                <div className="form-input">
-                    <button type="submit" className="submit-button">Submit Recipe</button>
-                </div>
-            </form>
+      {/* Recipe Form */}
+      <form className="form" onSubmit={handleSubmit}>
+        <div className="form-input">
+          <label>Title</label>
+          <input
+            className="input"
+            type="text"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            required
+          />
         </div>
-    );
+        <div className="form-input">
+          <label>Ingredients</label>
+          <textarea
+            className="input"
+            name="ingredients"
+            value={formData.ingredients}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-input">
+          <label>Instructions</label>
+          <textarea
+            className="input"
+            name="instruction"
+            value={formData.instruction}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-input">
+          <label>Time</label>
+          <input
+            className="input"
+            type='number'
+            name="time"
+            value={formData.time}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <button className="submit-button" type="submit">Add Recipe</button>
+      </form>
+    </div>
+  );
 };
 
 export default AddRecipe;
