@@ -94,6 +94,11 @@
   overflow: hidden;
 }
 
+.name{
+  color: #145a40;
+  margin: 0 0 5px;
+  
+}
 .title {
   font-size: 28px;
   margin: 0 0 8px;

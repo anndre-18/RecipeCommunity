@@ -136,12 +136,17 @@ const Login = ({ onClose }) => {
 
   return (
     <div className="backdrop" onClick={onClose}>
+      <h2 className="title">Tasty trails</h2>
       <dialog className="model" open onClick={(e) => e.stopPropagation()}>
+        
         <div className="login-wrapper">
+          
           {/* LEFT: Login */}
           <div className="left-panel">
-            <div className="login-card" aria-live="polite">           
-              
+            
+            <div className="login-card" aria-live="polite">  
+
+              <h3 className="name">Tasty trails</h3>
               <h2 className="title">Welcome Back, Chef!</h2>
               <div className="welcome-subtitle">Every trail leads to something tasty</div>
 

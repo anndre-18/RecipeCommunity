@@ -14,15 +14,22 @@ app.use(cors())
 app.use(bodyParser.json());
 
 //local host mongodb compass
-mongoose.connect("mongodb://localhost:27017/recipesDB").then(()=>{
-    console.log("Connected to MongoDB")
-})
-
-// atlas connection string
-// mongoose.connect("mongodb+srv://anndre-18:sherrlyn31@cluster0.5afem.mongodb.net/recipeDB")//returns a promise
-// .then(()=>{
+// mongoose.connect("mongodb://localhost:27017/recipesDB").then(()=>{
 //     console.log("Connected to MongoDB")
 // })
+
+// atlas connection string
+// Overriding Node's internal DNS servers to fix "querySrv ECONNREFUSED" on Windows
+const dns = require('dns');
+dns.setServers(['8.8.8.8', '8.8.4.4']);
+
+mongoose.connect(process.env.MONGO_URI)//returns a promise
+.then(()=>{
+    console.log("Connected to MongoDB Atlas")
+})
+.catch((error)=>{
+    console.error("Error connecting to MongoDB Atlas:", error.message)
+})
 
 const userSchema= new mongoose.Schema({
     id:{type:String,required:true,unique:true},
@@ -74,11 +81,6 @@ app.get("/api/recipes",async(req,res)=>{
         res.status(500).json({message:"Internal Sever Error"})
     }
 });
-
-//search recipes
-
-
-
 
 //add new recipe //need authentication [need to login]
 app.post("/api/recipes", async (req, res) => {
