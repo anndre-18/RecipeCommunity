@@ -385,8 +385,6 @@ app.get("/api/users/:userId/favorites", async (req, res) => {
 });
 
 
-// app.listen(3000,()=>{
-//     console.log("Server is running");
-// });
-
-module.exports = app;
+app.listen(3000,()=>{
+    console.log("Server is running");
+});
